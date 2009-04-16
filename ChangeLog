@@ -1,0 +1,8 @@
+2009-03-06 Ole Fritz  <ole.fritz@visia.de>
+
+	* initial code generated with kickstarter
+
+2009-03-23 Ole Fritz  <ole.fritz@visia.de>
+
+	* made the path for the log-file configurable
+	* added code for XCLASS inclusion	

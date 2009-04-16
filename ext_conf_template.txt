@@ -1,0 +1,5 @@
+# cat=basic/enable; type=small; label=E-Mail: Who should get an email with an information about available updates (komma separated list)?
+updateEmail =
+
+# cat=basic/enable; type=small; label=Log Path: Where should the log-file be placed?
+logPath =  uploads/tx_t3updatecheck/
