@@ -43,7 +43,7 @@ class tx_t3updatecheck_cli extends t3lib_cli {
 			'synopsis' => 'synopsis',
 			'description' => 'Looks for available TYPO3 updates.',
 			'examples' => 'typo3/cli_dispatch.phpsh ' . $this->extKey . ' check',
-			'author' => '(c) 2009 Ole Fritz <ole.fritz@gmail.com>',
+			'author' => '(c) 2009 Ole Fritz <ole.fritz@visia.de>',
 		));
 
 		// read backend conf
