@@ -3,3 +3,9 @@ updateEmail =
 
 # cat=basic/enable; type=small; label=Log Path: Where should the log-file be placed?
 logPath =  uploads/tx_t3updatecheck/
+
+# cat=basic/enable; type=boolean; label=Alpha Check: Do you like to get informed on new alpha versions?
+checkAlpha =
+
+# cat=basic/enable; type=boolean; label=Beta Check: Do you like to get informed on new beta versions?
+checkBeta =

@@ -98,7 +98,7 @@ class tx_t3updatecheck_cli extends t3lib_cli {
 
 		$log = '';
 		foreach($remote as $update) {
-			if(version_compare(TYPO3_version,$update['version'],'<') && !stristr($update['version'],'alpha') && !stristr($update['version'],'beta')) {
+			if(version_compare(TYPO3_version,$update['version'],'<') && (!stristr($update['version'],'alpha') || ($this->conf['checkAlpha'] && stristr($update['version'],'alpha'))) && (!stristr($update['version'],'beta') || ($this->conf['checkBeta'] && stristr($update['version'],'beta')))) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('version', 'tx_t3updatecheck_updates', 'version = "'.$update['version'].'"');
 				if(!mysql_num_rows($res)) {
 					$res = $GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_t3updatecheck_updates', $update);
