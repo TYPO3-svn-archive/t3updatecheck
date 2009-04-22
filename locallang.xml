@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>General TYPO3 Core Labels (clickmenus, list module, info boxes, tool-tips, file handling, editing, etc.)</description>
+		<type>module</type>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="warning.typo3_update">The version of this TYPO3 installation is outdated. Please consider an %supdate to the newest TYPO3 version%s.</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="warning.typo3_update">Die Version ihrer TYPO3 Installation ist veraltet. Sie sollten %sTYPO3 auf die aktuellste Version updaten%s.</label>
+		</languageKey>
+	</data>
+</T3locallang>
