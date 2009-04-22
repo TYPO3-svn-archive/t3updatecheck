@@ -36,13 +36,16 @@ class tx_t3updatecheck_cli extends t3lib_cli {
 		parent::t3lib_cli();
 
 		$this->cli_options = array_merge($this->cli_options, array(
+			array('-S','check for stable versions'),
+			array('-D','check for development versions'),
+			array('-h','display this help information'),
 		));
 
 		$this->cli_help = array_merge($this->cli_help, array(
 			'name' => 't3updatecheck CLI',
 			'synopsis' => 'synopsis',
 			'description' => 'Looks for available TYPO3 updates.',
-			'examples' => 'typo3/cli_dispatch.phpsh ' . $this->extKey . ' check',
+			'examples' => 'typo3/cli_dispatch.phpsh ' . $this->extKey . ' -s',
 			'author' => '(c) 2009 Ole Fritz <ole.fritz@visia.de>',
 		));
 
@@ -56,17 +59,22 @@ class tx_t3updatecheck_cli extends t3lib_cli {
 
 		// validate input
 		$this->cli_validateArgs();
+		
+		// overwrite backend conf with arguments from commandline
+		if (in_array('-S',$argv) && in_array('-D',$argv)) {
+			$this->conf['checkFor'] = 'Both';
+		} elseif (in_array('-S',$argv)) {
+			$this->conf['checkFor'] = 'Stable';
+		} elseif (in_array('-D',$argv)) {
+			$this->conf['checkFor'] = 'Development';
+		}
 
 		// select called function
-		switch ((string)$this->cli_args['_DEFAULT'][1]) {
-			case 'check':
-				$res = $this->compareVersions($res);
-				$res = $this->logResult($res);
-				break;
-			
-			default:
-				$this->cli_help();
-				break;
+		if (in_array('-S',$argv) || in_array('-D',$argv) || count($argv)<=1) {
+			$res = $this->compareVersions($res);
+			$res = $this->logResult($res);
+		} elseif (in_array('-h',$argv)) {
+			$this->cli_help();
 		}
 	}
 	
@@ -98,7 +106,7 @@ class tx_t3updatecheck_cli extends t3lib_cli {
 
 		$log = '';
 		foreach($remote as $update) {
-			if(version_compare(TYPO3_version,$update['version'],'<') && (!((stristr($update['version'],'alpha') || stristr($update['version'],'beta')) && $this->conf['checkFor'] == 'Stable') || ((stristr($update['version'],'alpha') || stristr($update['version'],'beta')) && $this->conf['checkFor'] == 'Development'))) {
+			if(version_compare(TYPO3_version,$update['version'],'<') && ((!(stristr($update['version'],'alpha') || stristr($update['version'],'beta')) && $this->conf['checkFor'] == 'Stable') || ((stristr($update['version'],'alpha') || stristr($update['version'],'beta')) && $this->conf['checkFor'] == 'Development'))) {
 				$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('version', 'tx_t3updatecheck_updates', 'version = "'.$update['version'].'"');
 				if(!mysql_num_rows($res)) {
 					$res = $GLOBALS['TYPO3_DB']->exec_INSERTquery('tx_t3updatecheck_updates', $update);
